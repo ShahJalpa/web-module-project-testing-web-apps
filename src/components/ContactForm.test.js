@@ -56,7 +56,20 @@ test('renders ONE error message if user enters a valid first name and last name 
 });
 
 test('renders "email must be a valid email address" if an invalid email is entered', async () => {
+    render(<ContactForm />);
+
+    const firstNameInput = screen.getByLabelText(/first name/i);
+    userEvent.type(firstNameInput, 'Jalpa');
     
+    const lastNameInput = screen.getByLabelText(/last name/i);
+    userEvent.type(lastNameInput, 'Shah');
+    
+    const validEmail = screen.getByLabelText(/email/i);
+    userEvent.type(validEmail, "jalpa454@.com");
+
+    //const error = screen.getByTestId(/error/i);
+    const error = screen.queryByText(/must be a valid email address/i);
+    //expect(error).toBeInTheDocument();
 });
 
 test('renders "lastName is a required field" if an last name is not entered and the submit button is clicked', async () => {
